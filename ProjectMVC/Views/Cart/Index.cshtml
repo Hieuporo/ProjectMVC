@@ -1,0 +1,91 @@
+﻿@model ShoppingCartViewModel
+
+<form method="post" class="pt-5 pb-5">
+    <div class="container">
+        <div class="row w-100">
+            <div class="col-lg-12 col-md-12 col-12">
+                <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
+                <p class="mb-5 text-center">
+                    <i class="text-info font-weight-bold">@Model.ShoppingCartList.Count()</i> items in your cart
+                </p>
+                <table id="shoppingCart" class="table table-condensed table-responsive">
+                    <thead>
+                        <tr>
+                            <th style="width:60%">Product</th>
+                            <th style="width:12%">Price</th>
+                            <th style="width:16%">Quantity</th>
+                            <th style="width:12%"></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.ShoppingCartList)
+                    {
+                        <tbody>
+                            <tr>
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-md-3 text-left">
+                                            <img src="@item.Product.ImageUrl" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                        </div>
+                                        <div class="col-md-9 text-left mt-sm-2">
+                                            <h4>@item.Product.Name</h4>
+                                            <p class="font-weight-light">@item.Product.Brand</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Price">@item.Product.Price.ToString("c")<span class="text-muted">&nbsp;x&nbsp;</span>@item.Count</td>
+                                <td data-th="Quantity">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <a asp-action="minus" asp-route-cartId="@item.Id" class="btn btn-outline-primary bg-gradient py-2">
+                                                <i class="bi bi-dash-square"></i>
+                                            </a>
+                                        </div>
+                                        <div style="width: 60px;" class="mx-1">
+                                            <input id="form1" min="0" name="quantity" asp-for="@item.Count" type="number"
+                                                   class="form-control p-2" />
+                                        </div>
+                                        <div class="input-group-append">
+                                            <a asp-action="plus" asp-route-cartId="@item.Id" class="btn btn-outline-primary bg-gradient py-2">
+                                                <i class="bi bi-plus-square"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td  >
+                                    <div class="text-right">
+                                        <a asp-action="remove" asp-route-cartId="@item.Id" class="btn btn-outline-danger btn-md mb-2 mx-4 mt-1">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    }
+                 
+                </table>
+                <div class="d-flex justify-content-end">
+                    <div class="pt-lg-4 px-5">
+                        <a asp-action="Summary" class="btn btn-primary mb-4 btn-lg">Checkout</a>
+
+                    </div>
+                    <div>
+                        <h4>Total:</h4>
+                        <h1>@Model.OrderHeader.OrderTotal.ToString("c")</h1>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-4 d-flex align-items-center">
+            <div class="col-sm-6 order-md-2 text-right">
+            </div>
+            <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                <a asp-action="Summary">
+                    <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

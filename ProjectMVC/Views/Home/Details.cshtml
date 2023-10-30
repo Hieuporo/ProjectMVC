@@ -1,0 +1,93 @@
+﻿@model ShoppingCart;
+
+
+
+<form method="post" class="py-5">
+    <input hidden asp-for="ProductId" />
+    <div class="container">
+        <div class="row gx-5">
+            <aside class="col-lg-6">
+                <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                    <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="@Model.Product.ImageUrl" />
+                </div>
+          
+                <!-- thumbs-wrap.// -->
+                <!-- gallery-wrap .end// -->
+            </aside>
+            <main class="col-lg-6">
+                <div class="ps-lg-3">
+                    <h4 class="title text-dark">
+                        Quality Men's Hoodie for Winter, Men's Fashion <br />
+                        Casual Hoodie
+                    </h4>
+                    <div class="d-flex flex-row my-3">
+                        <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>@Model.Product.Quantity products</span>
+                        <span class="text-success ms-2">In stock</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <span class="h5">$@Model.Product.Price.ToString("0.00")</span>
+                        <span class="text-muted">/per box</span>
+                    </div>
+
+                    <p>
+                        $@Model.Product.Description
+                    </p>
+
+                    <div class="row mt-5">
+                        <dt class="col-3">Brand</dt>
+                        <dd class="col-9">@Model.Product.Brand</dd>
+                    </div>
+
+                    <hr />
+
+                    <div class="row mb-4">
+                        
+                        <!-- col.// -->
+                        <div class="col-md-4 col-6 mb-3">
+                            <label class="mb-2 d-block">Quantity</label>
+                            <div id="countForm">
+                                <div class="input-group mb-3" style="width: 170px;">
+                                    <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon1" data-mdb-ripple-color="dark" onclick="decrementCount()">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="text" id="countInput" class="form-control text-center border border-secondary" asp-for="@Model.Count" aria-label="Example text with button addon" aria-describedby="button-addon1" id="countInput" />
+                                    <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" data-mdb-ripple-color="dark" onclick="incrementCount()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary shadow-0 mt-2"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</form>
+
+<script>
+    function incrementCount() {
+        var countInput = document.getElementById("countInput");
+        var count = parseInt(countInput.value);
+
+        if (!isNaN(count)) {
+            count += 1;
+            countInput.value = count;
+        } else {
+            countInput.value = 0; 
+        }
+    }
+
+    function decrementCount() {
+        var countInput = document.getElementById("countInput");
+        var count = parseInt(countInput.value);
+
+        if (!isNaN(count) && count > 0) {
+            count -= 1;
+            countInput.value = count;
+        } else {
+            countInput.value = 0;
+        }
+    }
+</script>
